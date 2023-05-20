@@ -6,6 +6,7 @@ import { Container, Title } from './styles'
 
 export const ListCoffee = () => {
   const { coffees } = useContext(ShoppingCartContext)
+
   return (
     <Container>
       <Title>Nossos cafés</Title>

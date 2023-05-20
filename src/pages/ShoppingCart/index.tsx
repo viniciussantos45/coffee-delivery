@@ -1,5 +1,6 @@
 import { Box } from '~/components/Base'
 import {
+  ConfirmOrderButton,
   Container,
   Content,
   ContentHeader,
@@ -9,15 +10,22 @@ import {
   IconYellow,
   ItemCoffee,
   ItemCoffeeAction,
+  ItemCoffeeHeader,
   ItemCoffeeImage,
   ItemCoffeeName,
   ItemCoffeeNameAndAction,
+  ItemCoffeePrice,
+  ItemCoffeeRemoveButton,
+  ItemCoffeeRemoveText,
+  ResumeOrder,
+  ResumeOrderDetail,
+  ResumeOrderTotal,
   SelectedCoffees,
   TitleSession,
 } from './styles'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { CurrencyDollar, MapPinLine } from 'phosphor-react'
+import { CurrencyDollar, MapPinLine, Trash } from 'phosphor-react'
 import { useContext } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -63,7 +71,8 @@ export function ShoppingCart() {
 
   const { handleSubmit } = allForms
 
-  const { itemsCart, coffees } = useContext(ShoppingCartContext)
+  const { itemsCart, coffees, addItem, decrementItem, removeItem, totalCart } =
+    useContext(ShoppingCartContext)
 
   const idsItemsCart = itemsCart.map((item) => item.id)
 
@@ -115,14 +124,77 @@ export function ShoppingCart() {
               .map((coffee) => (
                 <ItemCoffee key={coffee.id}>
                   <ItemCoffeeImage src={coffee.image} />
-                  <ItemCoffeeNameAndAction>
-                    <ItemCoffeeName>{coffee.name}</ItemCoffeeName>
-                    <ItemCoffeeAction>
-                      <NumberInput />
-                    </ItemCoffeeAction>
-                  </ItemCoffeeNameAndAction>
+                  <Box style={{ width: '100%' }}>
+                    <ItemCoffeeHeader>
+                      <ItemCoffeeName>{coffee.name}</ItemCoffeeName>
+                      <ItemCoffeePrice>
+                        {coffee.price.toLocaleString('pt-BR', {
+                          style: 'currency',
+                          currency: 'BRL',
+                        })}
+                      </ItemCoffeePrice>
+                    </ItemCoffeeHeader>
+                    <ItemCoffeeNameAndAction>
+                      <ItemCoffeeAction>
+                        <NumberInput
+                          size="small"
+                          defaultValue={
+                            itemsCart.find((ic) => ic.id === coffee.id)
+                              ?.quantity
+                          }
+                          onDecrement={() => {
+                            decrementItem(coffee.id)
+                          }}
+                          onIncrement={() => {
+                            addItem(coffee.id, 1)
+                          }}
+                        />
+                        <ItemCoffeeRemoveButton>
+                          <Trash size={18} />
+                          <ItemCoffeeRemoveText
+                            onClick={() => {
+                              removeItem(coffee.id)
+                            }}
+                          >
+                            REMOVER
+                          </ItemCoffeeRemoveText>
+                        </ItemCoffeeRemoveButton>
+                      </ItemCoffeeAction>
+                    </ItemCoffeeNameAndAction>
+                  </Box>
                 </ItemCoffee>
               ))}
+
+            <ResumeOrder>
+              <ResumeOrderDetail>
+                <Box>Total de itens</Box>
+                <Box>
+                  {totalCart.toLocaleString('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL',
+                  })}
+                </Box>
+              </ResumeOrderDetail>
+              <ResumeOrderDetail>
+                <Box>Entrega</Box>
+                <Box>
+                  {(3.5).toLocaleString('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL',
+                  })}
+                </Box>
+              </ResumeOrderDetail>
+              <ResumeOrderTotal>
+                <Box>Total</Box>
+                <Box>
+                  {(totalCart + 3.5).toLocaleString('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL',
+                  })}
+                </Box>
+              </ResumeOrderTotal>
+            </ResumeOrder>
+            <ConfirmOrderButton>Confirmar pedido</ConfirmOrderButton>
           </SelectedCoffees>
         </Box>
       </FormProvider>

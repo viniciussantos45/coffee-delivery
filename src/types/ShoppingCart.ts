@@ -18,7 +18,10 @@ export type ShoppingCartContextType = {
   itemsCart: ItemCart[]
   quantityItemsInCart: number
   coffees: CoffeeProps[]
+  totalCart: number
   addItem: (id: string, quantity: number) => void
+  decrementItem: (id: string) => void
+  removeItem: (id: string) => void
 }
 
 export type ShoppingCartProviderProps = {

@@ -8,17 +8,35 @@ export type NumberInputRefType = {
   decrement: () => void
 }
 
+interface NumberInputProps {
+  size?: 'small' | 'medium'
+  defaultValue?: number
+
+  onDecrement?: () => void
+  onIncrement?: () => void
+}
+
 const NumberInput = forwardRef(
-  (props, ref: React.Ref<NumberInputRefType> | undefined) => {
-    const [value, setValue] = useState(0)
+  (
+    {
+      size = 'medium',
+      defaultValue = 0,
+      onDecrement = () => {},
+      onIncrement = () => {},
+    }: NumberInputProps,
+    ref: React.Ref<NumberInputRefType> | undefined,
+  ) => {
+    const [value, setValue] = useState(defaultValue)
 
     const increment = () => {
       setValue((prevValue) => prevValue + 1)
+      onIncrement()
     }
 
     const decrement = () => {
       if (value > 0) {
         setValue((prevValue) => prevValue - 1)
+        onDecrement()
       }
     }
 
@@ -29,13 +47,13 @@ const NumberInput = forwardRef(
     }))
 
     return (
-      <Container>
-        <IconButton onClick={decrement}>
-          <Minus size={15} />
+      <Container sizeComponent={size}>
+        <IconButton onClick={decrement} sizeComponent={size}>
+          <Minus size={size === 'small' ? 13 : 15} weight="bold" />
         </IconButton>
-        <StyledInput type="text" value={value} readOnly />
-        <IconButton onClick={increment}>
-          <Plus size={15} />
+        <StyledInput type="text" value={value} readOnly sizeComponent={size} />
+        <IconButton onClick={increment} sizeComponent={size}>
+          <Plus size={size === 'small' ? 13 : 15} weight="bold" />
         </IconButton>
       </Container>
     )

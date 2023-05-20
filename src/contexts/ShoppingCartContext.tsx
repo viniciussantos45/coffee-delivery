@@ -135,15 +135,70 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
     return itemsCart.reduce((acc, item) => acc + item.quantity, 0)
   }, [itemsCart])
 
+  const totalCart = useMemo(() => {
+    return itemsCart.reduce((total, item) => {
+      const itemDetails = coffees.find((coffee) => coffee.id === item.id)
+      if (!itemDetails) return total
+      return total + itemDetails.price * item.quantity
+    }, 0)
+  }, [itemsCart, coffees])
+
   function addItem(id: string, quantity: number) {
     if (quantity <= 0) return
+
+    if (itemsCart.some((item) => item.id === id)) {
+      const newItemsCart = itemsCart.map((item) => {
+        if (item.id === id) {
+          return { ...item, quantity: item.quantity + quantity }
+        }
+
+        return item
+      })
+
+      return setItemsCart(newItemsCart)
+    }
 
     setItemsCart([...itemsCart, { id, quantity }])
   }
 
+  function decrementItem(id: string) {
+    const existingItem = itemsCart.find((item) => item.id === id)
+
+    if (!existingItem || existingItem.quantity <= 0) return
+
+    if (existingItem.quantity === 1) {
+      setItemsCart(itemsCart.filter((item) => item.id !== id))
+    } else {
+      const updatedItems = itemsCart.map((item) => {
+        if (item.id === id) {
+          return { ...item, quantity: item.quantity - 1 }
+        }
+        return item
+      })
+
+      setItemsCart(updatedItems)
+    }
+  }
+
+  function removeItem(id: string) {
+    const existingItem = itemsCart.find((item) => item.id === id)
+
+    if (!existingItem) return
+
+    setItemsCart(itemsCart.filter((item) => item.id !== id))
+  }
+
   return (
     <ShoppingCartContext.Provider
-      value={{ coffees, itemsCart, addItem, quantityItemsInCart }}
+      value={{
+        coffees,
+        itemsCart,
+        addItem,
+        decrementItem,
+        removeItem,
+        quantityItemsInCart,
+        totalCart,
+      }}
     >
       {children}
     </ShoppingCartContext.Provider>

@@ -1,7 +1,8 @@
 import { ShoppingCart } from 'phosphor-react'
-import { useContext, useRef } from 'react'
+import { useContext, useRef, useState } from 'react'
 import { ShoppingCartContext } from '~/contexts/ShoppingCartContext'
 import { CardCoffeeProps } from '~/types/CardCoffee'
+import { Alert } from '../Alert'
 import { Flex } from '../Base'
 import NumberInput, { NumberInputRefType } from '../NumberInput'
 import {
@@ -27,8 +28,19 @@ export const CardCoffee = ({
 
   const numberInputRef = useRef<NumberInputRefType>(null)
 
+  const [showAlert, setShowAlert] = useState(false)
+
   return (
     <CardContainer>
+      {showAlert && (
+        <Alert
+          title="Atenção"
+          message="Item adicionado ao seu carrinho!"
+          onClose={() => {
+            setShowAlert(false)
+          }}
+        />
+      )}
       <CardContent>
         <CoffeeImage src={image} />
         <Flex style={{ gap: '5px' }}>
@@ -57,6 +69,7 @@ export const CardCoffee = ({
             onClick={() => {
               if (numberInputRef.current) {
                 addItem(id, numberInputRef.current.getValue())
+                setShowAlert(true)
               }
             }}
           >
