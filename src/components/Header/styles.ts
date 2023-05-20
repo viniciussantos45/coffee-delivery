@@ -31,9 +31,32 @@ export const LocationButton = styled(Button)`
 `
 
 export const ShoppingCartButton = styled(Button)`
+  position: relative;
   background-color: ${({ theme }) => theme.colors.yellow[2]};
 
   & > svg {
     color: ${({ theme }) => theme.colors.yellow[0]};
   }
+`
+
+export const ShoppingCartQuantity = styled.div`
+  position: absolute;
+  top: -8px;
+  right: -8px;
+
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: ${({ theme }) => theme.colors.yellow[0]};
+`
+
+export const ShoppingCartQuantityText = styled.span`
+  height: 10px;
+  display: flex;
+  align-items: center;
 `

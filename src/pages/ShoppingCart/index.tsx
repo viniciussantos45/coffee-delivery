@@ -7,13 +7,22 @@ import {
   ContentHeaderTitle,
   IconPurple,
   IconYellow,
+  ItemCoffee,
+  ItemCoffeeAction,
+  ItemCoffeeImage,
+  ItemCoffeeName,
+  ItemCoffeeNameAndAction,
+  SelectedCoffees,
   TitleSession,
 } from './styles'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { CurrencyDollar, MapPinLine } from 'phosphor-react'
+import { useContext } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { z } from 'zod'
+import NumberInput from '~/components/NumberInput'
+import { ShoppingCartContext } from '~/contexts/ShoppingCartContext'
 import { AddressForm } from './Forms/Address'
 import { PaymentForm } from './Forms/Payment'
 
@@ -54,6 +63,10 @@ export function ShoppingCart() {
 
   const { handleSubmit } = allForms
 
+  const { itemsCart, coffees } = useContext(ShoppingCartContext)
+
+  const idsItemsCart = itemsCart.map((item) => item.id)
+
   return (
     <Container action="" onSubmit={handleSubmit(() => {})}>
       <FormProvider {...allForms}>
@@ -93,8 +106,24 @@ export function ShoppingCart() {
             <PaymentForm />
           </Content>
         </Box>
-        <Box>
+        <Box style={{ width: '45%' }}>
           <TitleSession>Cafés selecionados</TitleSession>
+
+          <SelectedCoffees>
+            {coffees
+              .filter((coffee) => idsItemsCart.includes(coffee.id))
+              .map((coffee) => (
+                <ItemCoffee key={coffee.id}>
+                  <ItemCoffeeImage src={coffee.image} />
+                  <ItemCoffeeNameAndAction>
+                    <ItemCoffeeName>{coffee.name}</ItemCoffeeName>
+                    <ItemCoffeeAction>
+                      <NumberInput />
+                    </ItemCoffeeAction>
+                  </ItemCoffeeNameAndAction>
+                </ItemCoffee>
+              ))}
+          </SelectedCoffees>
         </Box>
       </FormProvider>
     </Container>

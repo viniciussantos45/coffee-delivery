@@ -5,12 +5,17 @@ import {
   LocationButton,
   Logo,
   ShoppingCartButton,
+  ShoppingCartQuantity,
+  ShoppingCartQuantityText,
 } from './styles'
 
 import { MapPin, ShoppingCart } from 'phosphor-react'
+import { useContext } from 'react'
+import { ShoppingCartContext } from '~/contexts/ShoppingCartContext'
 
 export const Header = () => {
   const navigate = useNavigate()
+  const { quantityItemsInCart } = useContext(ShoppingCartContext)
 
   return (
     <HeaderWrapper>
@@ -31,6 +36,13 @@ export const Header = () => {
             navigate('/shopping-cart')
           }}
         >
+          {quantityItemsInCart > 0 && (
+            <ShoppingCartQuantity>
+              <ShoppingCartQuantityText>
+                {quantityItemsInCart}
+              </ShoppingCartQuantityText>
+            </ShoppingCartQuantity>
+          )}
           <ShoppingCart size={24} weight="fill" />
         </ShoppingCartButton>
       </ButtonDiv>
