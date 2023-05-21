@@ -4,8 +4,8 @@ import { Container, IconButton, StyledInput } from './styles'
 
 export type NumberInputRefType = {
   getValue: () => number
-  increment: () => void
-  decrement: () => void
+  increment: (e: React.MouseEventHandler<HTMLButtonElement>) => void
+  decrement: (e: React.MouseEventHandler<HTMLButtonElement>) => void
 }
 
 interface NumberInputProps {
@@ -28,12 +28,14 @@ const NumberInput = forwardRef(
   ) => {
     const [value, setValue] = useState(defaultValue)
 
-    const increment = () => {
+    const increment = (e: any) => {
+      e.preventDefault()
       setValue((prevValue) => prevValue + 1)
       onIncrement()
     }
 
-    const decrement = () => {
+    const decrement = (e: any) => {
+      e.preventDefault()
       if (value > 0) {
         setValue((prevValue) => prevValue - 1)
         onDecrement()

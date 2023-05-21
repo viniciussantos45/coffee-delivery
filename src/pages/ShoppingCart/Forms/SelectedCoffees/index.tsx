@@ -1,6 +1,7 @@
 import { useContext, useEffect } from 'react'
 import {
   ConfirmOrderButton,
+  GoToHomeButton,
   ItemCoffee,
   ItemCoffeeAction,
   ItemCoffeeHeader,
@@ -18,13 +19,16 @@ import {
 
 import { Trash } from 'phosphor-react'
 import { useFormContext } from 'react-hook-form'
-import { Box } from '~/components/Base'
+import { useNavigate } from 'react-router-dom'
+import { Box, Flex } from '~/components/Base'
 import NumberInput from '~/components/NumberInput'
 import { ShoppingCartContext } from '~/contexts/ShoppingCartContext'
 
 export function SelectedCoffees() {
   const { itemsCart, coffees, addItem, decrementItem, removeItem, totalCart } =
     useContext(ShoppingCartContext)
+
+  const navigate = useNavigate()
 
   const { register, setValue } = useFormContext()
 
@@ -36,11 +40,6 @@ export function SelectedCoffees() {
 
   useEffect(() => {
     setValue('items', itemsCart)
-    // if (itemsSchema.safeParse(itemsCart).success) {
-    // setValue('items', itemsCart);
-    // } else {
-    //   // Trate o erro de validação aqui
-    // }
   }, [itemsCart, setValue])
 
   return (
@@ -91,36 +90,61 @@ export function SelectedCoffees() {
           </ItemCoffee>
         ))}
 
-      <ResumeOrder>
-        <ResumeOrderDetail>
-          <Box>Total de itens</Box>
-          <Box>
-            {totalCart.toLocaleString('pt-BR', {
-              style: 'currency',
-              currency: 'BRL',
-            })}
-          </Box>
-        </ResumeOrderDetail>
-        <ResumeOrderDetail>
-          <Box>Entrega</Box>
-          <Box>
-            {(3.5).toLocaleString('pt-BR', {
-              style: 'currency',
-              currency: 'BRL',
-            })}
-          </Box>
-        </ResumeOrderDetail>
-        <ResumeOrderTotal>
-          <Box>Total</Box>
-          <Box>
-            {(totalCart + 3.5).toLocaleString('pt-BR', {
-              style: 'currency',
-              currency: 'BRL',
-            })}
-          </Box>
-        </ResumeOrderTotal>
-      </ResumeOrder>
-      <ConfirmOrderButton type="submit">Confirmar pedido</ConfirmOrderButton>
+      {itemsCart.length > 0 && (
+        <>
+          <ResumeOrder>
+            <ResumeOrderDetail>
+              <Box>Total de itens</Box>
+              <Box>
+                {totalCart.toLocaleString('pt-BR', {
+                  style: 'currency',
+                  currency: 'BRL',
+                })}
+              </Box>
+            </ResumeOrderDetail>
+            <ResumeOrderDetail>
+              <Box>Entrega</Box>
+              <Box>
+                {(3.5).toLocaleString('pt-BR', {
+                  style: 'currency',
+                  currency: 'BRL',
+                })}
+              </Box>
+            </ResumeOrderDetail>
+            <ResumeOrderTotal>
+              <Box>Total</Box>
+              <Box>
+                {(totalCart + 3.5).toLocaleString('pt-BR', {
+                  style: 'currency',
+                  currency: 'BRL',
+                })}
+              </Box>
+            </ResumeOrderTotal>
+          </ResumeOrder>
+          <ConfirmOrderButton type="submit">
+            Confirmar pedido
+          </ConfirmOrderButton>
+        </>
+      )}
+
+      {itemsCart.length === 0 && (
+        <Flex
+          style={{
+            flexDirection: 'column',
+            justifyContent: 'center',
+            gap: '30px',
+          }}
+        >
+          <Box style={{ textAlign: 'center' }}>Nenhum café adicionado</Box>
+          <GoToHomeButton
+            onClick={() => {
+              navigate('/')
+            }}
+          >
+            Voltar para home
+          </GoToHomeButton>
+        </Flex>
+      )}
     </SelectedCoffeesElement>
   )
 }

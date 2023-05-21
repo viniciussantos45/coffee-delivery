@@ -3,6 +3,7 @@ import { Box, Grid, Input } from '~/components/Base'
 import { ErrorMessage } from '~/components/ErrorMessage'
 import { InputMask } from '~/components/InputMask'
 import { FormType } from '../..'
+import { OptionalSpan } from './styles'
 
 export function AddressForm() {
   const {
@@ -52,7 +53,8 @@ export function AddressForm() {
             <ErrorMessage message={errors.address.number.message} />
           )}
         </Box>
-        <Box style={{ gridColumn: 'span 4' }}>
+        <Box style={{ position: 'relative', gridColumn: 'span 4' }}>
+          <OptionalSpan>Opcional</OptionalSpan>
           <Input
             placeholder="Complemento"
             {...register('address.complement')}

@@ -22,6 +22,7 @@ export type ShoppingCartContextType = {
   addItem: (id: string, quantity: number) => void
   decrementItem: (id: string) => void
   removeItem: (id: string) => void
+  clearCart: () => void
 }
 
 export type ShoppingCartProviderProps = {

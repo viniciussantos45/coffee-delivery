@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { Flex } from '../Base'
 
 export const Container = styled.div`
   position: relative;
@@ -35,27 +34,6 @@ export const Subtitle = styled.p`
 export const CoffeeImage = styled.img`
   position: relative;
   width: 400px;
-`
-
-export const RoundedIcon = styled(Flex)`
-  width: 30px;
-  height: 30px;
-  border-radius: 100px;
-  justify-content: center;
-  align-items: center;
-`
-
-export const RoundedIconYellow = styled(RoundedIcon)`
-  background-color: ${({ theme }) => theme.colors.yellow[1]};
-`
-export const RoundedIconDarkYellow = styled(RoundedIcon)`
-  background-color: ${({ theme }) => theme.colors.yellow[0]};
-`
-export const RoundedIconGray = styled(RoundedIcon)`
-  background-color: ${({ theme }) => theme.colors.gray[2]};
-`
-export const RoundedIconPurple = styled(RoundedIcon)`
-  background-color: ${({ theme }) => theme.colors.purple[1]};
 `
 
 export const TextItem = styled.p`

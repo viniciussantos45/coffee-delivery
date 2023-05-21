@@ -13,6 +13,7 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod'
 import { CurrencyDollar, MapPinLine } from 'phosphor-react'
 import { FormProvider, useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 import { z } from 'zod'
 import { AddressForm } from './Forms/Address'
 import { PaymentForm } from './Forms/Payment'
@@ -57,17 +58,13 @@ const formSchema = z.object({
 export type FormType = z.infer<typeof formSchema>
 
 export function ShoppingCart() {
+  const navigate = useNavigate()
+
   const allForms = useForm<FormType>({
     resolver: zodResolver(formSchema),
     mode: 'onBlur',
     defaultValues: {},
   })
-
-  const {
-    formState: { errors },
-  } = allForms
-
-  console.log(errors)
 
   const { handleSubmit } = allForms
 
@@ -75,7 +72,7 @@ export function ShoppingCart() {
     <Container
       action=""
       onSubmit={handleSubmit((data) => {
-        console.log(data)
+        navigate('/confirmed-order', { state: data })
       })}
     >
       <FormProvider {...allForms}>

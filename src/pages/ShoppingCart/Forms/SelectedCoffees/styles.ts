@@ -56,6 +56,7 @@ export const ItemCoffeeRemoveButton = styled.button`
   padding: 5px 10px;
   border-radius: 5px;
   gap: 5px;
+  cursor: pointer;
 `
 
 export const ItemCoffeeRemoveText = styled.p`
@@ -98,5 +99,12 @@ export const ConfirmOrderButton = styled.button`
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.yellow[0]};
+  }
+`
+
+export const GoToHomeButton = styled(ConfirmOrderButton)`
+  background-color: ${({ theme }) => theme.colors.purple[1]};
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.purple[0]};
   }
 `

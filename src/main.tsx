@@ -8,7 +8,7 @@ import { defaultTheme } from './theme'
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router>
+    <Router basename="/coffee-delivery/">
       <ThemeProvider theme={defaultTheme}>
         <GlobalStyles />
         <App />

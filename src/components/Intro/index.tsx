@@ -1,14 +1,18 @@
 import { Coffee, Package, ShoppingCart, Timer } from 'phosphor-react'
-import { Box, Flex, Grid } from '../Base'
+import {
+  Box,
+  Flex,
+  Grid,
+  RoundedIconDarkYellow,
+  RoundedIconGray,
+  RoundedIconPurple,
+  RoundedIconYellow,
+} from '../Base'
 import {
   BackgroundImage,
   CoffeeImage,
   Container,
   Content,
-  RoundedIconDarkYellow,
-  RoundedIconGray,
-  RoundedIconPurple,
-  RoundedIconYellow,
   Subtitle,
   TextItem,
   Title,

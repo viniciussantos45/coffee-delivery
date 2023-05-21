@@ -8,13 +8,13 @@ const colorsVariant = {
   background: {
     success: '#48BB7866',
     error: '#F56565',
-    warning: '#ECC94B',
+    warning: '#F6E05E66',
   },
 
   color: {
     success: '#2F855A',
     error: '#fff',
-    warning: '#fff',
+    warning: '#DBAC2C',
   },
 }
 
@@ -75,8 +75,8 @@ export const Overlay = styled.div`
 `
 
 export const Modal = styled.div<VariantProps>`
-  width: 300px;
-  padding: 30px 20px;
+  /* width: 400px; */
+  padding: 25px 30px;
   background: ${({ variant }) => colorsVariant.background[variant]};
   backdrop-filter: blur(10px);
   border-radius: 20px;
@@ -92,11 +92,6 @@ export const Title = styled.h3<VariantProps>`
   color: ${({ variant }) => colorsVariant.color[variant]};
 `
 
-// export const Icon = styled(XCircle)`
-//   margin-right: 10px;
-//   animation: ${swing} 1s ease infinite;
-// `
-
 export const Message = styled.p<VariantProps>`
   color: ${({ variant }) => colorsVariant.color[variant]};
   margin-top: 20px;
@@ -104,7 +99,7 @@ export const Message = styled.p<VariantProps>`
 
 export const Button = styled.button<VariantProps>`
   margin-top: 20px;
-  padding: 10px 20px;
+  padding: 10px 30px;
   border: none;
   outline: none;
   background: ${({ variant }) => colorsVariant.color[variant]};

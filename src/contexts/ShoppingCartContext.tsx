@@ -188,6 +188,10 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
     setItemsCart(itemsCart.filter((item) => item.id !== id))
   }
 
+  function clearCart() {
+    setItemsCart([])
+  }
+
   return (
     <ShoppingCartContext.Provider
       value={{
@@ -197,6 +201,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
         decrementItem,
         removeItem,
         quantityItemsInCart,
+        clearCart,
         totalCart,
       }}
     >
