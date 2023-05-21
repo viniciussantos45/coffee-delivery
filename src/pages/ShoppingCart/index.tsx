@@ -21,8 +21,8 @@ import { SelectedCoffees } from './Forms/SelectedCoffees'
 const addressSchema = z.object({
   cep: z
     .string()
-    .min(8, 'O CEP deve conter 8 caracteres')
-    .max(8, 'O CEP deve conter 8 caracteres'),
+    .min(9, 'O CEP deve conter 8 caracteres')
+    .max(9, 'O CEP deve conter 8 caracteres'),
   street: z.string().nonempty('O campo rua é obrigatório'),
   number: z.string().nonempty('O campo número é obrigatório'),
   neighborhood: z.string().nonempty('O campo bairro é obrigatório'),

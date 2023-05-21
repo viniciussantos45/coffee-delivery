@@ -34,7 +34,7 @@ export const CardCoffee = ({
     <CardContainer>
       {showAlert && (
         <Alert
-          title="Atenção"
+          title="Sucesso!"
           message="Item adicionado ao seu carrinho!"
           onClose={() => {
             setShowAlert(false)

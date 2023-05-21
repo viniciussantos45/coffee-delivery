@@ -1,11 +1,14 @@
 import { useFormContext } from 'react-hook-form'
 import { Box, Grid, Input } from '~/components/Base'
 import { ErrorMessage } from '~/components/ErrorMessage'
+import { InputMask } from '~/components/InputMask'
 import { FormType } from '../..'
 
 export function AddressForm() {
   const {
     register,
+    setValue,
+    getValues,
     formState: { errors },
   } = useFormContext<FormType>()
   return (
@@ -17,7 +20,14 @@ export function AddressForm() {
         }}
       >
         <Box style={{ gridColumn: 'span 2' }}>
-          <Input placeholder="CEP" {...register('address.cep')} />
+          <InputMask
+            name="address.cep"
+            placeholder="CEP"
+            mask="#####-###"
+            register={register}
+            setter={setValue}
+            getter={getValues}
+          />
           {errors.address?.cep && (
             <ErrorMessage message={errors.address.cep.message} />
           )}
