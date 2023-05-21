@@ -1,12 +1,12 @@
 import { useNavigate } from 'react-router-dom'
 import {
-  ButtonDiv,
-  HeaderWrapper,
-  LocationButton,
-  Logo,
-  ShoppingCartButton,
-  ShoppingCartQuantity,
-  ShoppingCartQuantityText,
+    ButtonDiv,
+    HeaderWrapper,
+    LocationButton,
+    Logo,
+    ShoppingCartButton,
+    ShoppingCartQuantity,
+    ShoppingCartQuantityText,
 } from './styles'
 
 import { MapPin, ShoppingCart } from 'phosphor-react'
@@ -20,7 +20,7 @@ export const Header = () => {
   return (
     <HeaderWrapper>
       <Logo
-        src="/public/logo.png"
+        src="./logo.png"
         onClick={() => {
           navigate('/')
         }}

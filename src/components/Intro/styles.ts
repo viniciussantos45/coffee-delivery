@@ -11,7 +11,7 @@ export const BackgroundImage = styled.div`
   position: absolute;
   width: 100%;
   height: 350px;
-  background: url('/public/background.png') no-repeat center;
+  background: url('./background.png') no-repeat center;
   background-size: 90% 100%;
   filter: blur(60px);
 `

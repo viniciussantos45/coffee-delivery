@@ -71,7 +71,7 @@ export const Intro = () => {
             </Grid>
           </Box>
           <Box>
-            <CoffeeImage src="/public/img-coffe.png" />
+            <CoffeeImage src="./img-coffe.png" />
           </Box>
         </Flex>
       </Content>

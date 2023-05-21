@@ -1,9 +1,9 @@
 import { createContext, useMemo, useState } from 'react'
 import {
-  CoffeeProps,
-  ItemCart,
-  ShoppingCartContextType,
-  ShoppingCartProviderProps,
+    CoffeeProps,
+    ItemCart,
+    ShoppingCartContextType,
+    ShoppingCartProviderProps,
 } from '~/types/ShoppingCart'
 
 export const ShoppingCartContext = createContext({} as ShoppingCartContextType)
@@ -16,7 +16,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
       name: 'Expresso Tradicional',
       description: 'O tradicional café feito com água quente e grãos moídos ',
       price: 9.9,
-      image: '/public/coffee-expresso.png',
+      image: './coffee-expresso.png',
     },
     {
       id: '2',
@@ -24,7 +24,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
       name: 'Expresso Americano',
       description: 'Expresso diluído, menos intenso que o tradicional',
       price: 9.9,
-      image: '/public/coffee-american.png',
+      image: './coffee-american.png',
     },
     {
       id: '3',
@@ -32,7 +32,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
       name: 'Expresso Cremoso',
       description: 'Café expresso tradicional com espuma cremosa',
       price: 9.9,
-      image: '/public/coffee-expresso-cremoso.png',
+      image: './coffee-expresso-cremoso.png',
     },
     {
       id: '4',
@@ -40,7 +40,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
       name: 'Expresso Gelado',
       description: 'Bebida preparada com café expresso e cubos de gelo',
       price: 9.9,
-      image: '/public/coffee-gelado.png',
+      image: './coffee-gelado.png',
     },
     {
       id: '5',
@@ -48,7 +48,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
       name: 'Café com Leite',
       description: 'Meio a meio de expresso tradicional com leite vaporizado',
       price: 9.9,
-      image: '/public/coffee-milk.png',
+      image: './coffee-milk.png',
     },
     {
       id: '6',
@@ -57,7 +57,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
       description:
         'Uma dose de café expresso com o dobro de leite e espuma cremosa',
       price: 9.9,
-      image: '/public/coffee-late.png',
+      image: './coffee-late.png',
     },
     {
       id: '7',
@@ -66,7 +66,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
       description:
         'Bebida com canela feita de doses iguais de café, leite e espuma',
       price: 9.9,
-      image: '/public/coffee-capuccino.png',
+      image: './coffee-capuccino.png',
     },
     {
       id: '8',
@@ -75,7 +75,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
       description:
         'Café expresso misturado com um pouco de leite quente e espuma',
       price: 9.9,
-      image: '/public/coffee-machiato.png',
+      image: './coffee-machiato.png',
     },
     {
       id: '9',
@@ -83,7 +83,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
       name: 'Mocaccino',
       description: 'Café expresso com calda de chocolate, pouco leite e espuma',
       price: 9.9,
-      image: '/public/coffee-mocaccino.png',
+      image: './coffee-mocaccino.png',
     },
     {
       id: '10',
@@ -92,7 +92,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
       description:
         'Bebida feita com chocolate dissolvido no leite quente e café',
       price: 9.9,
-      image: '/public/coffee-chocolate-quente.png',
+      image: './coffee-chocolate-quente.png',
     },
     {
       id: '11',
@@ -101,7 +101,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
       description:
         'Drink gelado de café expresso com rum, creme de leite e hortelã',
       price: 9.9,
-      image: '/public/coffee-cuban.png',
+      image: './coffee-cuban.png',
     },
     {
       id: '12',
@@ -109,7 +109,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
       name: 'Havaiano',
       description: 'Bebida adocicada preparada com café e leite de coco',
       price: 9.9,
-      image: '/public/coffee-havaiano.png',
+      image: './coffee-havaiano.png',
     },
     {
       id: '13',
@@ -117,7 +117,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
       name: 'Árabe',
       description: 'Bebida preparada com grãos de café árabe e especiarias',
       price: 9.9,
-      image: '/public/coffee-arabe.png',
+      image: './coffee-arabe.png',
     },
     {
       id: '14',
@@ -125,7 +125,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
       name: 'Irlandês',
       description: 'Bebida a base de café, uísque irlandês, açúcar e chantilly',
       price: 9.9,
-      image: '/public/coffee-irlandes.png',
+      image: './coffee-irlandes.png',
     },
   ])
 
