@@ -37,4 +37,27 @@ export const GlobalStyles = createGlobalStyle`
     line-height: 160%;
   }
   // Adicione quaisquer estilos globais adicionais, se necessário
+
+  ::-webkit-scrollbar {
+  width: 5px;
+  height: 10px;
+  padding: 50px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 2px rgba(185, 185, 185, 0);
+  border-radius: 40px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #8047F8;
+  border-radius: 40px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #8047F8;
+}
 `

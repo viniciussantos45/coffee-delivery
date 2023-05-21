@@ -35,3 +35,7 @@ export const Input = styled.input`
     color: ${({ theme }) => theme.colors.gray[3]};
   }
 `
+export const ErrorText = styled.p`
+  font-size: 0.8rem;
+  color: #f56565;
+`

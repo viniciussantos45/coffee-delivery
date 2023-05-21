@@ -1,6 +1,5 @@
 import { Box } from '~/components/Base'
 import {
-  ConfirmOrderButton,
   Container,
   Content,
   ContentHeader,
@@ -8,49 +7,43 @@ import {
   ContentHeaderTitle,
   IconPurple,
   IconYellow,
-  ItemCoffee,
-  ItemCoffeeAction,
-  ItemCoffeeHeader,
-  ItemCoffeeImage,
-  ItemCoffeeName,
-  ItemCoffeeNameAndAction,
-  ItemCoffeePrice,
-  ItemCoffeeRemoveButton,
-  ItemCoffeeRemoveText,
-  ResumeOrder,
-  ResumeOrderDetail,
-  ResumeOrderTotal,
-  SelectedCoffees,
   TitleSession,
 } from './styles'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { CurrencyDollar, MapPinLine, Trash } from 'phosphor-react'
-import { useContext } from 'react'
+import { CurrencyDollar, MapPinLine } from 'phosphor-react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { z } from 'zod'
-import NumberInput from '~/components/NumberInput'
-import { ShoppingCartContext } from '~/contexts/ShoppingCartContext'
 import { AddressForm } from './Forms/Address'
 import { PaymentForm } from './Forms/Payment'
+import { SelectedCoffees } from './Forms/SelectedCoffees'
 
 const addressSchema = z.object({
-  cep: z.string().min(8).max(8),
-  street: z.string(),
-  number: z.string(),
-  neighborhood: z.string(),
+  cep: z
+    .string()
+    .min(8, 'O CEP deve conter 8 caracteres')
+    .max(8, 'O CEP deve conter 8 caracteres'),
+  street: z.string().nonempty('O campo rua é obrigatório'),
+  number: z.string().nonempty('O campo número é obrigatório'),
+  neighborhood: z.string().nonempty('O campo bairro é obrigatório'),
   complement: z.string(),
-  city: z.string(),
-  state: z.string(),
+  city: z.string().nonempty('O campo cidade é obrigatório'),
+  state: z
+    .string()
+    .min(2, 'O estado deve conter 2 caracteres')
+    .max(2, 'O estado deve conter 2 caracteres')
+    .nonempty('O campo estado é obrigatório'),
 })
 
 const paymentSchema = z.object({
-  paymentMethod: z.string(),
+  paymentMethod: z
+    .string({ invalid_type_error: 'Selecione o método de pagamento' })
+    .nonempty('O método de pagamento é obrigatório'),
 })
 
 const itemSchema = z.object({
-  id: z.string(),
-  quantity: z.number(),
+  id: z.string().nonempty('O ID do item é obrigatório'),
+  quantity: z.number().min(1, 'A quantidade mínima é 1'),
 })
 
 const itemsSchema = z.array(itemSchema)
@@ -61,23 +54,30 @@ const formSchema = z.object({
   items: itemsSchema,
 })
 
-type FormType = z.infer<typeof formSchema>
+export type FormType = z.infer<typeof formSchema>
 
 export function ShoppingCart() {
   const allForms = useForm<FormType>({
     resolver: zodResolver(formSchema),
+    mode: 'onBlur',
     defaultValues: {},
   })
 
+  const {
+    formState: { errors },
+  } = allForms
+
+  console.log(errors)
+
   const { handleSubmit } = allForms
 
-  const { itemsCart, coffees, addItem, decrementItem, removeItem, totalCart } =
-    useContext(ShoppingCartContext)
-
-  const idsItemsCart = itemsCart.map((item) => item.id)
-
   return (
-    <Container action="" onSubmit={handleSubmit(() => {})}>
+    <Container
+      action=""
+      onSubmit={handleSubmit((data) => {
+        console.log(data)
+      })}
+    >
       <FormProvider {...allForms}>
         <Box style={{ width: '55%' }}>
           <TitleSession>Complete seu pedido</TitleSession>
@@ -117,85 +117,7 @@ export function ShoppingCart() {
         </Box>
         <Box style={{ width: '45%' }}>
           <TitleSession>Cafés selecionados</TitleSession>
-
-          <SelectedCoffees>
-            {coffees
-              .filter((coffee) => idsItemsCart.includes(coffee.id))
-              .map((coffee) => (
-                <ItemCoffee key={coffee.id}>
-                  <ItemCoffeeImage src={coffee.image} />
-                  <Box style={{ width: '100%' }}>
-                    <ItemCoffeeHeader>
-                      <ItemCoffeeName>{coffee.name}</ItemCoffeeName>
-                      <ItemCoffeePrice>
-                        {coffee.price.toLocaleString('pt-BR', {
-                          style: 'currency',
-                          currency: 'BRL',
-                        })}
-                      </ItemCoffeePrice>
-                    </ItemCoffeeHeader>
-                    <ItemCoffeeNameAndAction>
-                      <ItemCoffeeAction>
-                        <NumberInput
-                          size="small"
-                          defaultValue={
-                            itemsCart.find((ic) => ic.id === coffee.id)
-                              ?.quantity
-                          }
-                          onDecrement={() => {
-                            decrementItem(coffee.id)
-                          }}
-                          onIncrement={() => {
-                            addItem(coffee.id, 1)
-                          }}
-                        />
-                        <ItemCoffeeRemoveButton>
-                          <Trash size={18} />
-                          <ItemCoffeeRemoveText
-                            onClick={() => {
-                              removeItem(coffee.id)
-                            }}
-                          >
-                            REMOVER
-                          </ItemCoffeeRemoveText>
-                        </ItemCoffeeRemoveButton>
-                      </ItemCoffeeAction>
-                    </ItemCoffeeNameAndAction>
-                  </Box>
-                </ItemCoffee>
-              ))}
-
-            <ResumeOrder>
-              <ResumeOrderDetail>
-                <Box>Total de itens</Box>
-                <Box>
-                  {totalCart.toLocaleString('pt-BR', {
-                    style: 'currency',
-                    currency: 'BRL',
-                  })}
-                </Box>
-              </ResumeOrderDetail>
-              <ResumeOrderDetail>
-                <Box>Entrega</Box>
-                <Box>
-                  {(3.5).toLocaleString('pt-BR', {
-                    style: 'currency',
-                    currency: 'BRL',
-                  })}
-                </Box>
-              </ResumeOrderDetail>
-              <ResumeOrderTotal>
-                <Box>Total</Box>
-                <Box>
-                  {(totalCart + 3.5).toLocaleString('pt-BR', {
-                    style: 'currency',
-                    currency: 'BRL',
-                  })}
-                </Box>
-              </ResumeOrderTotal>
-            </ResumeOrder>
-            <ConfirmOrderButton>Confirmar pedido</ConfirmOrderButton>
-          </SelectedCoffees>
+          <SelectedCoffees />
         </Box>
       </FormProvider>
     </Container>

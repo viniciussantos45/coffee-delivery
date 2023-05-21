@@ -9,6 +9,15 @@ export const fadeIn = keyframes`
   }
 `
 
+export const fadeOut = keyframes`
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+`
+
 export const swing = keyframes`
   0% {
     transform: rotate(0deg);
@@ -33,6 +42,8 @@ export const swing = keyframes`
 export const Overlay = styled.div`
   z-index: 999;
   background: rgba(255, 255, 255, 0.5);
+
+  backdrop-filter: blur(5px);
   display: flex;
   position: fixed;
   top: 0;
@@ -41,6 +52,8 @@ export const Overlay = styled.div`
   right: 0;
   justify-content: center;
   align-items: center;
+
+  animation: ${fadeIn} 0.5s ease;
 `
 
 export const Modal = styled.div`
