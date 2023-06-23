@@ -49,10 +49,10 @@ export function SelectedCoffees() {
         .filter((coffee) => idsItemsCart.includes(coffee.id))
         .map((coffee) => (
           <ItemCoffee key={coffee.id}>
-            <ItemCoffeeImage src={coffee.image} />
+            <ItemCoffeeImage src={coffee.image_path} />
             <Box style={{ width: '100%' }}>
               <ItemCoffeeHeader>
-                <ItemCoffeeName>{coffee.name}</ItemCoffeeName>
+                <ItemCoffeeName>{coffee.coffee_name}</ItemCoffeeName>
                 <ItemCoffeePrice>
                   {coffee.price.toLocaleString('pt-BR', {
                     style: 'currency',

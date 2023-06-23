@@ -13,6 +13,7 @@ import {
   AuthContextData,
   AuthProviderProps,
   LoginCredentials,
+  SignUpCredentials,
   User,
 } from '~/types/Auth'
 import api from '../services/api'
@@ -55,18 +56,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   async function signIn({ email, password }: LoginCredentials) {
     try {
-      const { data } = await api.post(
-        '/session',
-        {
-          email,
-          password,
-        },
-        {
-          headers: {
-            'X-ORIGIN': 'https://coffee-delivery-api-dqr2.onrender.com',
-          },
-        },
-      )
+      const { data } = await api.post('/session', {
+        email,
+        password,
+      })
 
       const { access_token: accessToken } = data
 
@@ -85,10 +78,25 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   }
 
+  async function signUp({ email, name, password }: SignUpCredentials) {
+    try {
+      await api.post('/users/create', {
+        email,
+        name,
+        password,
+      })
+
+      signIn({ email, password })
+    } catch (e) {
+      return e
+    }
+  }
+
   return (
     <AuthContext.Provider
       value={{
         signIn,
+        signUp,
         signOut,
         user,
       }}

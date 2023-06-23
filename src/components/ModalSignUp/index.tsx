@@ -17,7 +17,7 @@ import {
   Title,
 } from './styles'
 
-const schema = z.object({
+const schemaSignUp = z.object({
   email: z.string().email({ message: 'Invalid email' }),
   name: z.string().nonempty({ message: 'Name is required' }),
   password: z.string().nonempty({ message: 'Password is required' }),
@@ -28,14 +28,14 @@ const schemaLogin = z.object({
   password: z.string().nonempty({ message: 'Password is required' }),
 })
 
-export type FormType = z.infer<typeof schema>
+export type FormTypeSignUp = z.infer<typeof schemaSignUp>
 export type FormTypeLogin = z.infer<typeof schemaLogin>
 
 export function ModalSignUp() {
   const theme = useTheme()
   const [isSignUp, setIsSignUp] = useState(false)
 
-  const { signIn } = useAuth()
+  const { signIn, signUp } = useAuth()
 
   const {
     register,
@@ -45,8 +45,20 @@ export function ModalSignUp() {
     resolver: zodResolver(schemaLogin),
   })
 
+  const {
+    register: registerSignUp,
+    handleSubmit: handleSubmitSignUp,
+    formState: { errors: errorsSignUp },
+  } = useForm<FormTypeSignUp>({
+    resolver: zodResolver(schemaSignUp),
+  })
+
   const onSubmit = (data: FormTypeLogin) => {
     signIn(data)
+  }
+
+  const onSubmitSignUp = (data: FormTypeSignUp) => {
+    signUp(data)
   }
 
   return (
@@ -61,28 +73,32 @@ export function ModalSignUp() {
             />
             <Title>Cadastre-se</Title>
             <FormContainer style={{ width: '20vw' }}>
-              <form onSubmit={handleSubmit(onSubmit)}>
+              <form onSubmit={handleSubmitSignUp(onSubmitSignUp)}>
                 <Flex style={{ flexDirection: 'column', gap: 10 }}>
                   <Input
                     type="email"
                     placeholder="Email"
-                    {...register('email')}
+                    {...registerSignUp('email')}
                   />
-                  {errors.email && (
-                    <ErrorMessage>{errors.email.message}</ErrorMessage>
+                  {errorsSignUp.email && (
+                    <ErrorMessage>{errorsSignUp.email.message}</ErrorMessage>
                   )}
 
-                  <Input type="text" placeholder="Nome" {...register('name')} />
-                  {errors.name && (
-                    <ErrorMessage>{errors.name.message}</ErrorMessage>
+                  <Input
+                    type="text"
+                    placeholder="Nome"
+                    {...registerSignUp('name')}
+                  />
+                  {errorsSignUp.name && (
+                    <ErrorMessage>{errorsSignUp.name.message}</ErrorMessage>
                   )}
                   <Input
                     type="password"
                     placeholder="Senha"
-                    {...register('password')}
+                    {...registerSignUp('password')}
                   />
-                  {errors.password && (
-                    <ErrorMessage>{errors.password.message}</ErrorMessage>
+                  {errorsSignUp.password && (
+                    <ErrorMessage>{errorsSignUp.password.message}</ErrorMessage>
                   )}
                   <ButtonAnotherAction
                     onClick={() => {
