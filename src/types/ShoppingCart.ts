@@ -10,7 +10,7 @@ export type CoffeeProps = {
 }
 
 export type ItemCart = {
-  id: string
+  coffee_id: string
   quantity: number
 }
 

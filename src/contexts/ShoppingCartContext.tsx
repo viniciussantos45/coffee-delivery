@@ -31,7 +31,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
 
   const totalCart = useMemo(() => {
     return itemsCart.reduce((total, item) => {
-      const itemDetails = coffees.find((coffee) => coffee.id === item.id)
+      const itemDetails = coffees.find((coffee) => coffee.id === item.coffee_id)
       if (!itemDetails) return total
       return total + itemDetails.price * item.quantity
     }, 0)
@@ -40,9 +40,9 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
   function addItem(id: string, quantity: number) {
     if (quantity <= 0) return
 
-    if (itemsCart.some((item) => item.id === id)) {
+    if (itemsCart.some((item) => item.coffee_id === id)) {
       const newItemsCart = itemsCart.map((item) => {
-        if (item.id === id) {
+        if (item.coffee_id === id) {
           return { ...item, quantity: item.quantity + quantity }
         }
 
@@ -52,19 +52,19 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
       return setItemsCart(newItemsCart)
     }
 
-    setItemsCart([...itemsCart, { id, quantity }])
+    setItemsCart([...itemsCart, { coffee_id: id, quantity }])
   }
 
   function decrementItem(id: string) {
-    const existingItem = itemsCart.find((item) => item.id === id)
+    const existingItem = itemsCart.find((item) => item.coffee_id === id)
 
     if (!existingItem || existingItem.quantity <= 0) return
 
     if (existingItem.quantity === 1) {
-      setItemsCart(itemsCart.filter((item) => item.id !== id))
+      setItemsCart(itemsCart.filter((item) => item.coffee_id !== id))
     } else {
       const updatedItems = itemsCart.map((item) => {
-        if (item.id === id) {
+        if (item.coffee_id === id) {
           return { ...item, quantity: item.quantity - 1 }
         }
         return item
@@ -75,11 +75,11 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
   }
 
   function removeItem(id: string) {
-    const existingItem = itemsCart.find((item) => item.id === id)
+    const existingItem = itemsCart.find((item) => item.coffee_id === id)
 
     if (!existingItem) return
 
-    setItemsCart(itemsCart.filter((item) => item.id !== id))
+    setItemsCart(itemsCart.filter((item) => item.coffee_id !== id))
   }
 
   function clearCart() {

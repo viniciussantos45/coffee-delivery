@@ -11,10 +11,14 @@ import {
 } from './styles'
 
 import { zodResolver } from '@hookform/resolvers/zod'
+import { AxiosResponse } from 'axios'
 import { CurrencyDollar, MapPinLine } from 'phosphor-react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { z } from 'zod'
+import api from '~/services/api'
+import { ResultNewOrder } from '~/types/AxiosResponses'
+import { NewOrderProps } from '~/types/Order'
 import { AddressForm } from './Forms/Address'
 import { PaymentForm } from './Forms/Payment'
 import { SelectedCoffees } from './Forms/SelectedCoffees'
@@ -43,7 +47,7 @@ const paymentSchema = z.object({
 })
 
 const itemSchema = z.object({
-  id: z.string().nonempty('O ID do item é obrigatório'),
+  coffee_id: z.string().nonempty('O ID do item é obrigatório'),
   quantity: z.number().min(1, 'A quantidade mínima é 1'),
 })
 
@@ -71,7 +75,19 @@ export function ShoppingCart() {
   return (
     <Container
       action=""
-      onSubmit={handleSubmit((data) => {
+      onSubmit={handleSubmit(async (data) => {
+        await api.post<
+          ResultNewOrder,
+          AxiosResponse<ResultNewOrder, NewOrderProps>,
+          NewOrderProps
+        >('/orders/create', {
+          ...data.address,
+          zip_code: data.address.cep,
+          country: 'Brasil',
+          order_items: data.items,
+          payment_method: data.payment.paymentMethod,
+        })
+
         navigate('/confirmed-order', { state: data })
       })}
     >

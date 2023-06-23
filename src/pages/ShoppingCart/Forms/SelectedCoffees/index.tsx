@@ -32,7 +32,7 @@ export function SelectedCoffees() {
 
   const { register, setValue } = useFormContext()
 
-  const idsItemsCart = itemsCart.map((item) => item.id)
+  const idsItemsCart = itemsCart.map((item) => item.coffee_id)
 
   useEffect(() => {
     register('items', { value: itemsCart })
@@ -65,7 +65,8 @@ export function SelectedCoffees() {
                   <NumberInput
                     size="small"
                     defaultValue={
-                      itemsCart.find((ic) => ic.id === coffee.id)?.quantity
+                      itemsCart.find((ic) => ic.coffee_id === coffee.id)
+                        ?.quantity
                     }
                     onDecrement={() => {
                       decrementItem(coffee.id)
