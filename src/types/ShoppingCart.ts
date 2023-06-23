@@ -2,10 +2,10 @@ import React from 'react'
 
 export type CoffeeProps = {
   id: string
-  name: string
+  coffee_name: string
   description: string
   price: number
-  image: string
+  image_path: string
   additions: string[]
 }
 

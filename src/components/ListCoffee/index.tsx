@@ -21,11 +21,11 @@ export const ListCoffee = () => {
           <CardCoffee
             key={coffee.id}
             id={coffee.id}
-            name={coffee.name}
+            name={coffee.coffee_name}
             additions={coffee.additions}
             description={coffee.description}
             price={coffee.price}
-            image={coffee.image}
+            image={coffee.image_path}
           />
         ))}
       </Grid>

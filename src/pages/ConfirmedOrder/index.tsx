@@ -3,22 +3,22 @@ import { useContext, useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { Alert } from '~/components/Alert'
 import {
-    Box,
-    Flex,
-    RoundedIconDarkYellow,
-    RoundedIconPurple,
-    RoundedIconYellow,
+  Box,
+  Flex,
+  RoundedIconDarkYellow,
+  RoundedIconPurple,
+  RoundedIconYellow,
 } from '~/components/Base'
 import { ShoppingCartContext } from '~/contexts/ShoppingCartContext'
 import {
-    Container,
-    GradientBorderBox,
-    Illustration,
-    Item,
-    ItemText,
-    ItemTextBold,
-    Subtitle,
-    Title,
+  Container,
+  GradientBorderBox,
+  Illustration,
+  Item,
+  ItemText,
+  ItemTextBold,
+  Subtitle,
+  Title,
 } from './styles'
 
 const paymentMethods = {

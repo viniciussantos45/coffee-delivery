@@ -42,7 +42,7 @@ export const CardCoffee = ({
         />
       )}
       <CardContent>
-        <CoffeeImage src={image} />
+        <CoffeeImage src={`./${image}`} />
         <Flex style={{ gap: '5px' }}>
           {additions.map((addition, index) => (
             <CoffeeAddition key={index}>{addition}</CoffeeAddition>
