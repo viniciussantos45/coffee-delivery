@@ -31,6 +31,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const [user, setUser] = useState<User | null>(null)
   const [alertError, setAlertError] = useState(false)
+  const [alertErrorSignUp, setAlertErrorSignUp] = useState(false)
 
   const signOut = useCallback(() => {
     destroyCookie(null, 'coffee-delivery.token', { path: '/' })
@@ -93,7 +94,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       signIn({ email, password })
     } catch (e) {
-      setAlertError(true)
+      setAlertErrorSignUp(true)
       return e
     }
   }
@@ -122,6 +123,23 @@ export function AuthProvider({ children }: AuthProviderProps) {
           }
           onClose={() => {
             setAlertError(false)
+          }}
+        />
+      )}
+      {alertErrorSignUp && (
+        <Alert
+          message="Erro ao criar usuário, tente novamente."
+          title="Erro"
+          variant="error"
+          icon={
+            <WarningCircle
+              size={20}
+              weight="fill"
+              style={{ marginRight: '5px' }}
+            />
+          }
+          onClose={() => {
+            setAlertErrorSignUp(false)
           }}
         />
       )}

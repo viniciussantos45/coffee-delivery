@@ -59,7 +59,7 @@ export const Overlay = styled.div`
 
 export const Modal = styled.div`
   /* width: 400px; */
-  padding: 25px 30px;
+  padding: 35px;
   background: ${({ theme }) => theme.colors.purple[1]}55;
   backdrop-filter: blur(10px);
   border-radius: 20px;

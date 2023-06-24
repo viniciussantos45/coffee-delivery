@@ -101,13 +101,16 @@ export function ModalSignUp() {
                     <ErrorMessage>{errorsSignUp.password.message}</ErrorMessage>
                   )}
                   <ButtonAnotherAction
-                    onClick={() => {
+                    type="button"
+                    onClick={(e) => {
                       setIsSignUp(false)
                     }}
                   >
                     Faça login
                   </ButtonAnotherAction>
-                  <Button onClick={() => {}}>Criar conta</Button>
+                  <Button type="submit" onClick={() => {}}>
+                    Criar conta
+                  </Button>
                 </Flex>
 
                 {/* <Input type="submit" value="Submit" /> */}
@@ -140,6 +143,7 @@ export function ModalSignUp() {
                     <ErrorMessage>{errors.password.message}</ErrorMessage>
                   )}
                   <ButtonAnotherAction
+                    type="button"
                     onClick={() => {
                       setIsSignUp(true)
                     }}
