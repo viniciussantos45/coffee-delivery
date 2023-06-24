@@ -45,7 +45,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       const { 'coffee-delivery.token': token } = parseCookies()
 
       if (token) {
-        api.defaults.headers.common.Authorization = `bearer ${token}`
+        api.defaults.headers.common.Authorization = `Bearer ${token}`
 
         api
           .get('/orders/my_orders')
@@ -75,9 +75,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
         path: '/',
       })
 
-      setUser({ email })
+      api.defaults.headers.common.Authorization = `Bearer ${accessToken}`
 
-      api.defaults.headers.common.Authorization = `bearer ${accessToken}`
+      setUser({ email })
     } catch (e) {
       setAlertError(true)
       return e
