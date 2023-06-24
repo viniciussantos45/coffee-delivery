@@ -8,6 +8,7 @@ import {
 
 import { destroyCookie, parseCookies, setCookie } from 'nookies'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { Alert } from '~/components/Alert'
 import { ModalSignUp } from '~/components/ModalSignUp'
 import {
   AuthContextData,
@@ -18,6 +19,8 @@ import {
 } from '~/types/Auth'
 import api from '../services/api'
 
+import { WarningCircle } from 'phosphor-react'
+
 const openRoutes = ['/']
 
 export const AuthContext = createContext({} as AuthContextData)
@@ -27,6 +30,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const location = useLocation()
 
   const [user, setUser] = useState<User | null>(null)
+  const [alertError, setAlertError] = useState(false)
 
   const signOut = useCallback(() => {
     destroyCookie(null, 'coffee-delivery.token', { path: '/' })
@@ -74,6 +78,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       api.defaults.headers.common.Authorization = `bearer ${accessToken}`
     } catch (e) {
+      setAlertError(true)
       return e
     }
   }
@@ -88,6 +93,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       signIn({ email, password })
     } catch (e) {
+      setAlertError(true)
       return e
     }
   }
@@ -101,7 +107,25 @@ export function AuthProvider({ children }: AuthProviderProps) {
         user,
       }}
     >
+      {alertError && (
+        <Alert
+          message="Erro ao fazer login, senha incorreta."
+          title="Erro"
+          variant="error"
+          icon={
+            <WarningCircle
+              size={20}
+              weight="fill"
+              style={{ marginRight: '5px' }}
+            />
+          }
+          onClose={() => {
+            setAlertError(false)
+          }}
+        />
+      )}
       {!user && !openRoutes.includes(location.pathname) && <ModalSignUp />}
+
       {children}
     </AuthContext.Provider>
   )

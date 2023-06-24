@@ -7,13 +7,13 @@ type VariantProps = {
 const colorsVariant = {
   background: {
     success: '#48BB7866',
-    error: '#F56565',
+    error: '#F5656577',
     warning: '#F6E05E66',
   },
 
   color: {
     success: '#2F855A',
-    error: '#fff',
+    error: '#F56565',
     warning: '#DBAC2C',
   },
 }
