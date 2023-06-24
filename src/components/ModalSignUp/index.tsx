@@ -102,7 +102,7 @@ export function ModalSignUp() {
                   )}
                   <ButtonAnotherAction
                     type="button"
-                    onClick={(e) => {
+                    onClick={() => {
                       setIsSignUp(false)
                     }}
                   >
