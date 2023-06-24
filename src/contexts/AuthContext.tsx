@@ -107,6 +107,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         user,
       }}
     >
+      {!user && !openRoutes.includes(location.pathname) && <ModalSignUp />}
       {alertError && (
         <Alert
           message="Erro ao fazer login, senha incorreta."
@@ -124,7 +125,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
           }}
         />
       )}
-      {!user && !openRoutes.includes(location.pathname) && <ModalSignUp />}
 
       {children}
     </AuthContext.Provider>
