@@ -1,3 +1,4 @@
+import { parseCookies, setCookie } from 'nookies'
 import { createContext, useEffect, useMemo, useState } from 'react'
 import api from '~/services/api'
 import { ResultCoffees } from '~/types/AxiosResponses'
@@ -12,6 +13,19 @@ export const ShoppingCartContext = createContext({} as ShoppingCartContextType)
 
 export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
   const [coffees, setCoffees] = useState<CoffeeProps[]>([])
+  const [itemsCart, setItemsCart] = useState<ItemCart[]>(() => {
+    const { 'coffee-delivery.itemsCart': cookieItemsCart } = parseCookies()
+
+    return cookieItemsCart ? JSON.parse(cookieItemsCart) : []
+  })
+
+  useEffect(() => {
+    const tenMinutes = new Date(new Date().getTime() + 10 * 60 * 1000)
+    setCookie(null, 'coffee-delivery.itemsCart', JSON.stringify(itemsCart), {
+      path: '/',
+      expires: tenMinutes,
+    })
+  }, [itemsCart])
 
   useEffect(() => {
     async function loadCoffees() {
@@ -22,8 +36,6 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
 
     loadCoffees()
   }, [])
-
-  const [itemsCart, setItemsCart] = useState<ItemCart[]>([])
 
   const quantityItemsInCart = useMemo(() => {
     return itemsCart.reduce((acc, item) => acc + item.quantity, 0)

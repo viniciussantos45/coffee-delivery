@@ -20,7 +20,7 @@ import {
 import api from '../services/api'
 
 import { WarningCircle } from 'phosphor-react'
-
+import { Loading } from '~/components/Loading'
 const openRoutes = ['/']
 
 export const AuthContext = createContext({} as AuthContextData)
@@ -32,34 +32,50 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User | null>(null)
   const [alertError, setAlertError] = useState(false)
   const [alertErrorSignUp, setAlertErrorSignUp] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [showModalSignUp, setShowModalSignUp] = useState(false)
 
   const signOut = useCallback(() => {
     destroyCookie(null, 'coffee-delivery.token', { path: '/' })
 
     setUser(undefined)
-    navigate('/login')
   }, [navigate])
 
-  useEffect(() => {
-    async function onLoadContext() {
-      const { 'coffee-delivery.token': token } = parseCookies()
+  async function onLoadContext() {
+    setIsLoading(true)
+    const { 'coffee-delivery.token': token } = parseCookies(undefined, {
+      page: '/',
+    })
 
-      if (token) {
-        api.defaults.headers.common.Authorization = `Bearer ${token}`
+    if (token) {
+      api.defaults.headers.common.Authorization = `Bearer ${token}`
 
-        api
-          .get('/orders/my_orders')
-          .then(({ data }) => data)
-          .catch(() => {
-            signOut()
-          })
-      }
+      api
+        .get('/me')
+        .then(({ data }) => {
+          setUser(data.user.email)
+        })
+        .catch(() => {
+          signOut()
+        })
+    } else {
+      setShowModalSignUp(!openRoutes.includes(location.pathname))
     }
+    setIsLoading(false)
+  }
 
+  useEffect(() => {
     onLoadContext()
-  }, [location.pathname, signOut, navigate])
+  }, [location.pathname])
+
+  useEffect(() => {
+    if (user) {
+      setShowModalSignUp(false)
+    }
+  }, [user])
 
   async function signIn({ email, password }: LoginCredentials) {
+    setIsLoading(true)
     try {
       const { data } = await api.post('/session', {
         email,
@@ -68,7 +84,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       const { access_token: accessToken } = data
 
-      const timeCookie = 60 * 15
+      const timeCookie = 60 * 60 * 24 * 30 // 30 days
 
       setCookie(undefined, 'coffee-delivery.token', accessToken, {
         maxAge: timeCookie,
@@ -79,9 +95,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       setUser({ email })
     } catch (e) {
+      setIsLoading(false)
       setAlertError(true)
       return e
     }
+
+    setIsLoading(false)
   }
 
   async function signUp({ email, name, password }: SignUpCredentials) {
@@ -99,6 +118,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   }
 
+  if (isLoading) {
+    return <Loading />
+  }
+
   return (
     <AuthContext.Provider
       value={{
@@ -108,7 +131,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         user,
       }}
     >
-      {!user && !openRoutes.includes(location.pathname) && <ModalSignUp />}
+      {showModalSignUp && <ModalSignUp />}
       {alertError && (
         <Alert
           message="Erro ao fazer login, senha incorreta."

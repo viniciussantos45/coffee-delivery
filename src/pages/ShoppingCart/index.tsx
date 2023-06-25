@@ -67,7 +67,11 @@ export function ShoppingCart() {
   const allForms = useForm<FormType>({
     resolver: zodResolver(formSchema),
     mode: 'onBlur',
-    defaultValues: {},
+    defaultValues: {
+      address: {
+        complement: '',
+      },
+    },
   })
 
   const { handleSubmit } = allForms

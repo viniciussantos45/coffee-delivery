@@ -12,7 +12,7 @@
   "dependencies": {
     "@hookform/resolvers": "^3.1.0",
     "axios": "^1.4.0",
-    "date-fns": "^2.29.3",
+    "date-fns": "^2.30.0",
     "immer": "^10.0.1",
     "nookies": "^2.5.2",
     "phosphor-react": "^1.4.1",

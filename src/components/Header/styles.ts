@@ -12,13 +12,13 @@ export const HeaderWrapper = styled.header`
 export const Logo = styled.img`
   width: 85px;
   color: #333;
+
+  cursor: pointer;
 `
 
 export const ButtonDiv = styled.div`
   display: flex;
-  & > button:first-child {
-    margin-right: 10px;
-  }
+  gap: 10px;
 `
 
 export const LocationButton = styled(Button)`
@@ -36,6 +36,24 @@ export const ShoppingCartButton = styled(Button)`
 
   & > svg {
     color: ${({ theme }) => theme.colors.yellow[0]};
+  }
+`
+
+export const MyOrdersButton = styled(Button)`
+  position: relative;
+  background-color: ${({ theme }) => theme.colors.purple[2]};
+
+  & > svg {
+    color: ${({ theme }) => theme.colors.purple[0]};
+  }
+`
+
+export const SignOutButton = styled(Button)`
+  position: relative;
+  background-color: #ffe0e0;
+
+  & > svg {
+    color: #fe4343;
   }
 `
 

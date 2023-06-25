@@ -14,6 +14,7 @@ import {
   Input,
   Modal,
   Overlay,
+  TextPasswordCrypto,
   Title,
 } from './styles'
 
@@ -100,6 +101,10 @@ export function ModalSignUp() {
                   {errorsSignUp.password && (
                     <ErrorMessage>{errorsSignUp.password.message}</ErrorMessage>
                   )}
+
+                  <TextPasswordCrypto>
+                    Sua senha criptografada em nosso banco de dados
+                  </TextPasswordCrypto>
                   <ButtonAnotherAction
                     type="button"
                     onClick={() => {
@@ -142,6 +147,9 @@ export function ModalSignUp() {
                   {errors.password && (
                     <ErrorMessage>{errors.password.message}</ErrorMessage>
                   )}
+                  <TextPasswordCrypto>
+                    Sua senha criptografada em nosso banco de dados
+                  </TextPasswordCrypto>
                   <ButtonAnotherAction
                     type="button"
                     onClick={() => {

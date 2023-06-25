@@ -1,3 +1,4 @@
+import { Order } from './Order'
 import { CoffeeProps } from './ShoppingCart'
 
 export type ResultCoffees = {
@@ -6,4 +7,8 @@ export type ResultCoffees = {
 
 export type ResultNewOrder = {
   message: string
+}
+
+export type ResultOrders = {
+  orders: Order[]
 }

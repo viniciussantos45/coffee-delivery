@@ -124,3 +124,10 @@ export const FormContainer = styled.div`
 export const ErrorMessage = styled.p`
   // Estilo para mensagens de erro
 `
+export const TextPasswordCrypto = styled.p`
+  color: ${({ theme }) => theme.colors.gray[2]};
+  font-size: 0.8rem;
+  margin-top: 2px;
+  margin-bottom: 2px;
+  text-align: center;
+`
